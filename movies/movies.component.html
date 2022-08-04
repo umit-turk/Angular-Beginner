@@ -5,7 +5,7 @@
   </div>
 
   <ng-template
-    [ngTemplateOutlet]="movieList2"
+    [ngTemplateOutlet]="movieList1"
     [ngTemplateOutletContext]="{ movies: popularMovies }"
   >
   </ng-template>
@@ -24,8 +24,9 @@
       </div>
       <div class="col-md-9">
         <div class="card-body">
-          <h2 class="card-title">{{ movie.title }}</h2>
+          <h2 class="card-title">{{ movie.title | titlecase }}</h2>
           <p class="card-text">{{ movie.description }}</p>
+          <p class="card-text">{{ movie.datePublished | date:'dd/MM/y' }}</p>
           <button class="btn btn-sm btn-outline-primary">Details</button>
         </div>
       </div>
@@ -33,36 +34,35 @@
   </div>
 </ng-template>
 
-<ng-template #movieList2 let-filmler="movies">
-  <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
-    <div class="col" *ngFor="let film of filmler">
-      <div class="card h-100">
-        <img src="{{ film.img }}" alt="" class="card-img-top img-fluid" />
-        <div class="card-body">
-          <h5 class="card-title">{{ film.title }}</h5>
-          <p class="card-text">{{ film.description }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
+<h4>lower-upper-title pipe</h4>
+<p>{{'Samsung S20' | lowercase}}</p>
+<p>{{'Samsung S20' | uppercase}}</p>
+<p>{{'Samsung S20' | titlecase}}</p>
 
-<ng-template #movieList3 let-populerFilmler="movies">
-  <h2>Popular filmler</h2>
-  <div class="card mb-3" *ngFor="let movie of populerFilmler">
-    <div class="row">
-      <div class="col-md-2">
-        <img src="{{ movie.img }}" class="img-fluid" alt="" />
-      </div>
-      <div class="col-md-10">
-        <div class="card-body">
-          <h2 class="card-title">{{ movie.title }}</h2>
-          <p class="card-text">{{ movie.description }}</p>
-          <button class="btn btn-sm btn-outline-primary">Details</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
+<br><br>
+<h4>Date pipe</h4>
+<p>{{today }}</p>
+<p>{{today | date }}</p>
+<p>{{today | date: 'fullDate' }}</p>
+<p>{{today | date: 'medium' }}</p>
+<p>{{today | date: 'shortYime' }}</p>
+<p>{{today | date: 'h:mm:ss' }}</p>
+
+<h4>Decimal Pipe</h4>
+
+<p>{{2.4234234 | number }}</p>
+<p>{{2.4234234 | number:'1.0-3' }}</p>
+<p>{{2.4234234 | number:'4.0-3' }}</p>
+
+<br> <br>
+<h4>Currency pipe</h4>
+<p>{{395 | currency:"TRY"}}</p>
+<p>{{395 | currency}}</p>
+
+<br><br>
+<h4>Percent pipe</h4>
+<p>{{0.24 | percent}}</p>
+
+
 
 <!-- <app-movie *ngFor="let item of movies"></app-movie> -->
