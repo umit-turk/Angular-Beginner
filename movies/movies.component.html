@@ -4,9 +4,12 @@
     {{ movies.length }} film bulundu
   </div>
 
+  <ng-template
+    [ngTemplateOutlet]="movieList2"
+    [ngTemplateOutletContext]="{ movies: popularMovies }"
+  >
+  </ng-template>
   <ng-template [ngTemplateOutlet]="movieList1"> </ng-template>
-  <ng-template [ngTemplateOutlet]="movieList2"> </ng-template>
-  <ng-template [ngTemplateOutlet]="movieList3" [ngTemplateOutletContext]="{movies: movieRepository.getMovies()}"> </ng-template>
 </div>
 
 <ng-template #no_movies>
@@ -30,24 +33,21 @@
   </div>
 </ng-template>
 
-<ng-template #movieList2>
-  <div class="card mb-3" *ngFor="let movie of movies">
-    <div class="row">
-      <div class="col-md-2">
-        <img src="{{ movie.img }}" class="img-fluid" alt="" />
-      </div>
-      <div class="col-md-10">
+<ng-template #movieList2 let-filmler="movies">
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+    <div class="col" *ngFor="let film of filmler">
+      <div class="card h-100">
+        <img src="{{ film.img }}" alt="" class="card-img-top img-fluid" />
         <div class="card-body">
-          <h2 class="card-title">{{ movie.title }}</h2>
-          <p class="card-text">{{ movie.description }}</p>
-          <button class="btn btn-sm btn-outline-primary">Details</button>
+          <h5 class="card-title">{{ film.title }}</h5>
+          <p class="card-text">{{ film.description }}</p>
         </div>
       </div>
     </div>
   </div>
 </ng-template>
 
-<ng-template #movieList3  let-populerFilmler="movies">
+<ng-template #movieList3 let-populerFilmler="movies">
   <h2>Popular filmler</h2>
   <div class="card mb-3" *ngFor="let movie of populerFilmler">
     <div class="row">
