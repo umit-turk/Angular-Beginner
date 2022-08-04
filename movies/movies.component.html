@@ -16,6 +16,9 @@
   <div class="alert alert-warning">Film bulunamadı</div>
 </ng-template>
 
+
+
+
 <ng-template #movieList1>
   <div class="card mb-3" *ngFor="let movie of movies">
     <div class="row">
@@ -25,7 +28,7 @@
       <div class="col-md-9">
         <div class="card-body">
           <h2 class="card-title">{{ movie.title | titlecase }}</h2>
-          <p class="card-text">{{ movie.description }}</p>
+          <p class="card-text">{{ movie.description | summary:10 }}</p>
           <p class="card-text">{{ movie.datePublished | date:'dd/MM/y' }}</p>
           <button class="btn btn-sm btn-outline-primary">Details</button>
         </div>
@@ -34,34 +37,7 @@
   </div>
 </ng-template>
 
-<h4>lower-upper-title pipe</h4>
-<p>{{'Samsung S20' | lowercase}}</p>
-<p>{{'Samsung S20' | uppercase}}</p>
-<p>{{'Samsung S20' | titlecase}}</p>
 
-<br><br>
-<h4>Date pipe</h4>
-<p>{{today }}</p>
-<p>{{today | date }}</p>
-<p>{{today | date: 'fullDate' }}</p>
-<p>{{today | date: 'medium' }}</p>
-<p>{{today | date: 'shortYime' }}</p>
-<p>{{today | date: 'h:mm:ss' }}</p>
-
-<h4>Decimal Pipe</h4>
-
-<p>{{2.4234234 | number }}</p>
-<p>{{2.4234234 | number:'1.0-3' }}</p>
-<p>{{2.4234234 | number:'4.0-3' }}</p>
-
-<br> <br>
-<h4>Currency pipe</h4>
-<p>{{395 | currency:"TRY"}}</p>
-<p>{{395 | currency}}</p>
-
-<br><br>
-<h4>Percent pipe</h4>
-<p>{{0.24 | percent}}</p>
 
 
 

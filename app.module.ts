@@ -1,3 +1,4 @@
+import { SummaryPipe } from './pipes/summary.pipe';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -18,7 +19,8 @@ import { FooterComponent } from './footer/footer.component';
     MoviesComponent,
     MovieComponent,
     MovieDetailComponent,
-    FooterComponent
+    FooterComponent,
+    SummaryPipe
   ],
   imports: [ //module
     BrowserModule,
