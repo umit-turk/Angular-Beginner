@@ -1,3 +1,4 @@
+<div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
 <div *ngIf="movies.length > 0; else no_movies">
   <h1 *ngIf="movies.length > 0">{{ title }}</h1>
   <div class="alert alert-success" *ngIf="movies.length > 0">
@@ -28,10 +29,9 @@
         <div class="card-body">
           <h2 class="card-title">{{ movie.title | titlecase }}</h2>
           <p class="card-text">{{ movie.description | summary:10 }}</p>
-          <p class="card-text">{{ movie.datePublished | date:'dd/MM/y' }}</p>
           <div>
-            <button class="btn btn-sm btn-outline-primary">Details</button>
             <button (click)="addToList($event, movie)" class="btn btn-sm btn-primary">Listeye Ekle</button>
+            <button (click)="removeFromList( movie)" class="btn btn-sm btn-danger">Sil</button>
 
           </div>
         </div>

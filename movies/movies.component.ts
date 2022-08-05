@@ -1,7 +1,8 @@
-import { MovieRepository } from "./../models/movie.repository";
+import { MovieService } from "./../services/movie.service";
+
 import { Movie } from "./../models/movie";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { debounce, debounceTime, fromEvent, interval } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-movies",
@@ -10,40 +11,60 @@ import { debounce, debounceTime, fromEvent, interval } from "rxjs";
 })
 export class MoviesComponent implements OnInit {
   title: string = "film listesi";
-  movies: Movie[];
-  FilteredMovies: Movie[];
-  movieRepository: MovieRepository;
-  today = new Date();
+  movies: Movie[] = [];
+  FilteredMovies: Movie[] = [];
+  errorMessage: any = ""
 
   filterText: string = "";
-  constructor() {
-    this.movieRepository = new MovieRepository();
-    this.movies = this.movieRepository.getMovies();
-    this.FilteredMovies = this.movies;
+  constructor(
+    private toastr: ToastrService,
+    private movieService: MovieService
+  ) {}
+
+  ngOnInit(): void {
+    this.getListMovies();
   }
 
-  ngOnInit(): void {}
+  getListMovies() {
+    return this.movieService.getMovies().subscribe(
+      (response) => {
+        this.movies = response;
+        this.FilteredMovies = this.movies;
+      },
+      (error) => this.errorMessage = error
+    );
+  }
 
   onInputChange() {
-    this.FilteredMovies = this.filterText
-      ? this.movies.filter(
-          (m) =>
-            m.title.toLocaleLowerCase().indexOf(this.filterText) !== -1 ||
-            m.description.indexOf(this.filterText) !== -1
-        )
-      : this.movies;
+
+  this.FilteredMovies = this.filterText ? this.movies.filter(m => m.title.indexOf(this.filterText.toLocaleLowerCase())!= -1) :this.movies;
+
   }
 
-  addToList($event:any ,movie: Movie){
-    if($event.target.classList.contains('btn-primary')) {
-      $event.target.innerText = 'Listeden Çıkar';
-      $event.target.classList.remove('btn-primary');
-      $event.target.classList.add('btn-danger');
-    }else {
-      $event.target.innerText = 'Listeye Ekle';
-      $event.target.classList.remove('btn-danger');
-      $event.target.classList.add('btn-primary');
+  addToList($event: any, movie: Movie) {
+    if ($event.target.classList.contains("btn-primary")) {
+      $event.target.innerText = "Listeden Çıkar";
+      $event.target.classList.remove("btn-primary");
+      $event.target.classList.add("btn-danger");
+      this.toastr.error("listeden çıkar");
+    } else {
+      $event.target.innerText = "Listeye Ekle";
+      $event.target.classList.remove("btn-danger");
+      $event.target.classList.add("btn-primary");
+      this.toastr.success("listeye eklendi");
     }
+  }
+
+  removeFromList(movie:any){
+    let findMovieId = this.movies.find(m => m.id == movie.id)
+   let id:undefined | any = findMovieId?.id
+   return this.movieService.deleteMovie(id).subscribe(res => {
+    this.FilteredMovies = this.FilteredMovies.filter(m => m.id != id);
+   })
 
   }
+
+
+
+
 }

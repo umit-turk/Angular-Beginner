@@ -1,6 +1,10 @@
+import { CategoryService } from './services/category.service';
+import { MovieService } from './services/movie.service';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +32,16 @@ import { MovieFilterPipe } from './pipes/movie-filter.pipe';
   imports: [ //module
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+    }), // ToastrModule added
   ],
-  providers: [], //services
+  providers: [
+    MovieService,
+    CategoryService
+  ], //services
   bootstrap: [AppComponent] //starter component
 })
 export class AppModule { }
