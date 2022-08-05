@@ -1,19 +1,14 @@
 <div *ngIf="movies.length > 0; else no_movies">
   <h1 *ngIf="movies.length > 0">{{ title }}</h1>
   <div class="alert alert-success" *ngIf="movies.length > 0">
-    {{ movies.length }} film bulundu
+    {{ FilteredMovies.length }} film bulundu
   </div>
 
   <div class="mb-3">
-    <input #txt [(ngModel)]="filterText" type="text" class="form-control" placeholder="Search...">
-    <small class="text-muted" *ngIf="filterText">Aradığınız kelime: {{filterText}}</small>
+    <input  [(ngModel)]="filterText" (change)="onInputChange()" type="text" class="form-control" placeholder="Search...">
+    <small class="text-muted" *ngIf="filterText">Aradığınız kelime: {{filterText}} </small>
   </div>
 
-  <ng-template
-    [ngTemplateOutlet]="movieList1"
-    [ngTemplateOutletContext]="{ movies: popularMovies }"
-  >
-  </ng-template>
   <ng-template [ngTemplateOutlet]="movieList1"> </ng-template>
 </div>
 
@@ -23,9 +18,8 @@
 
 
 
-
 <ng-template #movieList1>
-  <div class="card mb-3" *ngFor="let movie of movies | movieFilter: filterText">
+  <div class="card mb-3" *ngFor="let movie of FilteredMovies ">
     <div class="row">
       <div class="col-md-3">
         <img src="{{ movie.img }}" class="img-fluid" alt="" />
@@ -35,7 +29,11 @@
           <h2 class="card-title">{{ movie.title | titlecase }}</h2>
           <p class="card-text">{{ movie.description | summary:10 }}</p>
           <p class="card-text">{{ movie.datePublished | date:'dd/MM/y' }}</p>
-          <button class="btn btn-sm btn-outline-primary">Details</button>
+          <div>
+            <button class="btn btn-sm btn-outline-primary">Details</button>
+            <button (click)="addToList($event, movie)" class="btn btn-sm btn-primary">Listeye Ekle</button>
+
+          </div>
         </div>
       </div>
     </div>
